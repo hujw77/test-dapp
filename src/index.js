@@ -59,6 +59,7 @@ const walletConnectBtn = document.getElementById('walletConnect');
 const sdkConnectBtn = document.getElementById('sdkConnect');
 
 // Ethereum Signature Section
+const merkleTree = document.getElementById('merkleTree');
 const signTypedDataV4 = document.getElementById('signTypedDataV4');
 const signTypedDataV4Result = document.getElementById('signTypedDataV4Result');
 const signTypedDataV4Verify = document.getElementById('signTypedDataV4Verify');
@@ -455,25 +456,25 @@ const initializeFormElements = () => {
   /**
    * Sign Typed Data V4
    */
-  const msgParams = {
-    domain: {
-      name: 'Sphinx',
-      version: '1.0.0',
-    },
-    message: {
-      root: '0xc8b404b1575b3d187f8a69442b987ae21a59ad068b14e51057d9a1d4b5c6fbfa'
-    },
-    primaryType: 'MerkleRoot',
-    types : {
-      EIP712Domain: [
-        { name: 'name', type: 'string' },
-        { name: 'version', type: 'string' },
-      ],
-      MerkleRoot: [{ name: 'root', type: 'bytes32' }]
-    }
-  };
-
   signTypedDataV4.onclick = async () => {
+    const msgParams = {
+      domain: {
+        name: 'Sphinx',
+        version: '1.0.0',
+      },
+      message: {
+        root: merkleTree.value
+      },
+      primaryType: 'MerkleRoot',
+      types : {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+        ],
+        MerkleRoot: [{ name: 'root', type: 'bytes32' }]
+      }
+    };
+
     try {
       const from = accounts[0];
       const sign = await provider.request({
@@ -492,6 +493,24 @@ const initializeFormElements = () => {
    *  Sign Typed Data V4 Verification
    */
   signTypedDataV4Verify.onclick = async () => {
+    const msgParams = {
+      domain: {
+        name: 'Sphinx',
+        version: '1.0.0',
+      },
+      message: {
+        root: merkleTree.value
+      },
+      primaryType: 'MerkleRoot',
+      types : {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+        ],
+        MerkleRoot: [{ name: 'root', type: 'bytes32' }]
+      }
+    };
+
     try {
       const from = accounts[0];
       const sign = signTypedDataV4Result.innerHTML;
