@@ -8,7 +8,6 @@ import {
   handleWalletConnect,
   walletConnect,
 } from './connections';
-import { NETWORKS_BY_CHAIN_ID } from './onchain-sample-contracts';
 
 /**
  * Page
@@ -248,16 +247,8 @@ export const handleNewAccounts = (newAccounts) => {
   accountsDiv.innerHTML = accounts;
 };
 
-let chainIdInt;
-let networkName;
-let chainIdPadded;
-
 const handleNewChain = (chainId) => {
   chainIdDiv.innerHTML = chainId;
-  const networkId = parseInt(networkDiv.innerHTML, 10);
-  chainIdInt = parseInt(chainIdDiv.innerHTML, 16) || networkId;
-  chainIdPadded = `0x${chainIdInt.toString(16).padStart(77, '0')}`;
-  networkName = NETWORKS_BY_CHAIN_ID[chainIdInt];
 
   if (chainId === '0x1') {
     warningDiv.classList.remove('warning-invisible');
@@ -394,8 +385,7 @@ const updateOnboardElements = () => {
     console.error(error);
   }
 
-  if (isMetaMaskInstalled()) {
-  } else {
+  if (!isMetaMaskInstalled()) {
     onboardButton.innerText = 'Click here to install MetaMask!';
     onboardButton.onclick = () => {
       onboardButton.innerText = 'Onboarding in progress';
@@ -463,16 +453,16 @@ const initializeFormElements = () => {
         version: '1.0.0',
       },
       message: {
-        root: merkleTree.value
+        root: merkleTree.value,
       },
       primaryType: 'MerkleRoot',
-      types : {
+      types: {
         EIP712Domain: [
           { name: 'name', type: 'string' },
           { name: 'version', type: 'string' },
         ],
-        MerkleRoot: [{ name: 'root', type: 'bytes32' }]
-      }
+        MerkleRoot: [{ name: 'root', type: 'bytes32' }],
+      },
     };
 
     try {
@@ -499,16 +489,16 @@ const initializeFormElements = () => {
         version: '1.0.0',
       },
       message: {
-        root: merkleTree.value
+        root: merkleTree.value,
       },
       primaryType: 'MerkleRoot',
-      types : {
+      types: {
         EIP712Domain: [
           { name: 'name', type: 'string' },
           { name: 'version', type: 'string' },
         ],
-        MerkleRoot: [{ name: 'root', type: 'bytes32' }]
-      }
+        MerkleRoot: [{ name: 'root', type: 'bytes32' }],
+      },
     };
 
     try {
